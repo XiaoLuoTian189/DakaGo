@@ -1,11 +1,12 @@
 <?php
 
 use Flarum\Database\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 return Migration::addColumns(
     'discussions',
-    [
-        'is_checkin_type' => ['type' => 'boolean', 'default' => 0],
-    ]
+    function (Blueprint $table) {
+        $table->boolean('is_checkin_type')->default(0);
+    }
 );
 

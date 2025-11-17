@@ -1,25 +1,23 @@
 <?php
 
 use Flarum\Database\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 return Migration::createTable(
     'checkin_records',
-    [
-        'id' => ['type' => 'integer', 'unsigned' => true, 'autoIncrement' => true],
-        'discussion_id' => ['type' => 'integer', 'unsigned' => true],
-        'user_id' => ['type' => 'integer', 'unsigned' => true],
-        'checkin_date' => ['type' => 'date'],
-        'photo_url' => ['type' => 'string', 'length' => 255],
-        'note' => ['type' => 'text', 'nullable' => true],
-        'created_at' => ['type' => 'datetime'],
-        'updated_at' => ['type' => 'datetime'],
-    ],
-    [
-        'PRIMARY KEY (`id`)',
-        'KEY `discussion_id` (`discussion_id`)',
-        'KEY `user_id` (`user_id`)',
-        'KEY `checkin_date` (`checkin_date`)',
-        'UNIQUE KEY `unique_daily_checkin` (`discussion_id`, `user_id`, `checkin_date`)',
-    ]
+    function (Blueprint $table) {
+        $table->increments('id');
+        $table->unsignedInteger('discussion_id');
+        $table->unsignedInteger('user_id');
+        $table->date('checkin_date');
+        $table->string('photo_url', 255);
+        $table->text('note')->nullable();
+        $table->timestamps();
+
+        $table->index('discussion_id');
+        $table->index('user_id');
+        $table->index('checkin_date');
+        $table->unique(['discussion_id', 'user_id', 'checkin_date'], 'unique_daily_checkin');
+    }
 );
 
