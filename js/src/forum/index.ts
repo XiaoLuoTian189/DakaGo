@@ -9,15 +9,22 @@ import CheckinHistory from './components/CheckinHistory';
 
 app.initializers.add('flarum-checkin', () => {
   // 扩展讨论编辑器，添加打卡类型选择
+  extend(DiscussionComposer.prototype, 'oninit', function () {
+    if (!this.composer.fields().isCheckinType) {
+      this.composer.fields().isCheckinType = false;
+    }
+  });
+
   extend(DiscussionComposer.prototype, 'headerItems', function (items) {
     if (this.composer.fields().isNew) {
       items.add(
         'checkin-type',
-        <div className="CheckinTypeSelector">
+        <div className="CheckinTypeSelector Form-group">
           <Checkbox
             state={this.composer.fields().isCheckinType || false}
             onchange={(value) => {
               this.composer.fields().isCheckinType = value;
+              m.redraw();
             }}
           >
             {app.translator.trans('flarum-checkin.forum.composer.checkin_type_label')}
@@ -25,6 +32,12 @@ app.initializers.add('flarum-checkin', () => {
         </div>
       );
     }
+  });
+
+  // 确保在提交时包含 isCheckinType 字段
+  extend(DiscussionComposer.prototype, 'data', function (data) {
+    data.attributes = data.attributes || {};
+    data.attributes.isCheckinType = this.composer.fields().isCheckinType || false;
   });
 
   // 在讨论页面添加打卡功能
