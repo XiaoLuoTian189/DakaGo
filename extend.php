@@ -9,15 +9,7 @@ use Flarum\Checkin\Listener\SaveCheckinType;
 use Flarum\Checkin\Listener\AddCheckinData;
 use Flarum\Discussion\Event\Saving;
 
-return [
-    (new Extend\Frontend('forum'))
-        ->js(__DIR__.'/js/dist/forum.js')
-        ->css(__DIR__.'/less/forum.less'),
-
-    (new Extend\Frontend('admin'))
-        ->js(__DIR__.'/js/dist/admin.js')
-        ->css(__DIR__.'/less/admin.less'),
-
+$extensions = [
     (new Extend\Locales(__DIR__.'/locale')),
 
     (new Extend\Routes('api'))
@@ -42,3 +34,33 @@ return [
         ->default('flarum-checkin.max-photos-per-day', 10)
         ->default('flarum-checkin.allowed-file-types', 'jpg,jpeg,png,gif'),
 ];
+
+// 添加前端资源（如果文件存在）
+$forumJs = __DIR__.'/js/dist/forum.js';
+$forumCss = __DIR__.'/less/forum.less';
+$adminJs = __DIR__.'/js/dist/admin.js';
+$adminCss = __DIR__.'/less/admin.less';
+
+if (file_exists($forumJs) || file_exists($forumCss)) {
+    $forumExtend = new Extend\Frontend('forum');
+    if (file_exists($forumJs)) {
+        $forumExtend->js($forumJs);
+    }
+    if (file_exists($forumCss)) {
+        $forumExtend->css($forumCss);
+    }
+    $extensions[] = $forumExtend;
+}
+
+if (file_exists($adminJs) || file_exists($adminCss)) {
+    $adminExtend = new Extend\Frontend('admin');
+    if (file_exists($adminJs)) {
+        $adminExtend->js($adminJs);
+    }
+    if (file_exists($adminCss)) {
+        $adminExtend->css($adminCss);
+    }
+    $extensions[] = $adminExtend;
+}
+
+return $extensions;

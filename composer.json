@@ -1,5 +1,5 @@
 {
-    "name": "xiaoluotian189/dk",
+    "name": "xiaoluotian189/dakago",
     "description": "允许用户创建打卡类主题，每日上传打卡照片",
     "keywords": [
         "flarum",
@@ -15,8 +15,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/XiaoLuoTian189/DK/issues",
-        "source": "https://github.com/XiaoLuoTian189/DK"
+        "issues": "https://github.com/XiaoLuoTian189/DakaGo/issues",
+        "source": "https://github.com/XiaoLuoTian189/DakaGo/"
     },
     "require": {
         "flarum/core": "^1.0"
