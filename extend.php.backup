@@ -34,3 +34,4 @@ return [
         ->default('flarum-checkin.max-photos-per-day', 10)
         ->default('flarum-checkin.allowed-file-types', 'jpg,jpeg,png,gif'),
 ];
+
