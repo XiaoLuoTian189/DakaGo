@@ -39,8 +39,8 @@ class UploadPhotoController implements RequestHandlerInterface
         $filename = Str::random(40) . '.' . $extension;
         
         // 创建上传目录（使用 Flarum 的 public 目录）
-        $publicPath = app()->basePath() . '/public';
-        $uploadDir = $publicPath . '/assets/checkin';
+        $basePath = app()->basePath();
+        $uploadDir = $basePath . '/public/assets/checkin';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
@@ -49,8 +49,9 @@ class UploadPhotoController implements RequestHandlerInterface
         $filePath = $uploadDir . '/' . $filename;
         $file->moveTo($filePath);
 
-        // 返回文件 URL（使用 Flarum 的 URL 生成器）
-        $url = app()->url() . '/assets/checkin/' . $filename;
+        // 返回文件 URL
+        $baseUrl = rtrim(app()->url(), '/');
+        $url = $baseUrl . '/assets/checkin/' . $filename;
 
         return new JsonResponse([
             'data' => [

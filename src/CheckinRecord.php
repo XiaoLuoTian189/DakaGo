@@ -10,7 +10,11 @@ class CheckinRecord extends AbstractModel
 {
     protected $table = 'checkin_records';
 
-    protected $dates = ['created_at', 'updated_at', 'checkin_date'];
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'checkin_date' => 'date',
+    ];
 
     protected $fillable = ['discussion_id', 'user_id', 'checkin_date', 'photo_url', 'note'];
 
