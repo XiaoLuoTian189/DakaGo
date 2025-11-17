@@ -1,5 +1,5 @@
 {
-    "name": "xiaoluotian189/DAKGO",
+    "name": "xiaoluotian189/dakago",
     "description": "允许用户创建打卡类主题，每日上传打卡照片",
     "keywords": [
         "flarum",
@@ -41,5 +41,6 @@
         }
     }
 }
+
 
 
