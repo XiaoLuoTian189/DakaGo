@@ -1,0 +1,20 @@
+flarum-checkin:
+  forum:
+    composer:
+      checkin_type_label: 这是打卡类主题
+    checkin:
+      title: 每日打卡
+      upload_button: 上传打卡照片
+    upload_modal:
+      title: 上传打卡照片
+      photo_label: 选择照片
+      note_label: 备注（可选）
+      note_placeholder: 写下今天的打卡心得...
+      submit_button: 提交打卡
+      success: 打卡成功！
+    history:
+      title: 打卡历史
+      empty: 还没有打卡记录
+      delete: 删除
+      delete_confirm: 确定要删除这条打卡记录吗？
+      delete_success: 删除成功

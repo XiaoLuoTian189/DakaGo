@@ -1,0 +1,44 @@
+{
+    "name": "xiaoluotian189/dk",
+    "description": "允许用户创建打卡类主题，每日上传打卡照片",
+    "keywords": [
+        "flarum",
+        "checkin",
+        "daily",
+        "打卡"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "XiaoLuoTian189"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/XiaoLuoTian189/DK/issues",
+        "source": "https://github.com/XiaoLuoTian189/DK"
+    },
+    "require": {
+        "flarum/core": "^1.0"
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "打卡插件",
+            "icon": {
+                "name": "fas fa-camera",
+                "backgroundColor": "#e74c3c",
+                "color": "#fff"
+            }
+        },
+        "flarum-js": {
+            "source": "js/dist/forum.js",
+            "admin": "js/dist/admin.js"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Flarum\\Checkin\\": "src/"
+        }
+    }
+}
+
