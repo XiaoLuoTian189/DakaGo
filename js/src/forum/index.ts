@@ -10,28 +10,47 @@ import CheckinHistory from './components/CheckinHistory';
 app.initializers.add('flarum-checkin', () => {
   // 扩展讨论编辑器，添加打卡类型选择
   extend(DiscussionComposer.prototype, 'oninit', function () {
-    if (!this.composer.fields().isCheckinType) {
+    if (this.composer.fields().isCheckinType === undefined) {
       this.composer.fields().isCheckinType = false;
     }
   });
 
+  // 方法1: 使用 composerFields 方法（Flarum 标准方法）
+  extend(DiscussionComposer.prototype, 'composerFields', function (items) {
+    items.add(
+      'checkin-type',
+      <div className="CheckinTypeSelector Form-group" style="margin: 15px 0; padding: 0 20px;">
+        <Checkbox
+          state={this.composer.fields().isCheckinType || false}
+          onchange={(value) => {
+            this.composer.fields().isCheckinType = value;
+            m.redraw();
+          }}
+        >
+          {app.translator.trans('flarum-checkin.forum.composer.checkin_type_label')}
+        </Checkbox>
+      </div>,
+      100
+    );
+  });
+
+  // 方法2: 同时使用 headerItems 作为备选
   extend(DiscussionComposer.prototype, 'headerItems', function (items) {
-    if (this.composer.fields().isNew) {
-      items.add(
-        'checkin-type',
-        <div className="CheckinTypeSelector Form-group">
-          <Checkbox
-            state={this.composer.fields().isCheckinType || false}
-            onchange={(value) => {
-              this.composer.fields().isCheckinType = value;
-              m.redraw();
-            }}
-          >
-            {app.translator.trans('flarum-checkin.forum.composer.checkin_type_label')}
-          </Checkbox>
-        </div>
-      );
-    }
+    items.add(
+      'checkin-type-header',
+      <div className="CheckinTypeSelector Form-group" style="margin: 10px 0;">
+        <Checkbox
+          state={this.composer.fields().isCheckinType || false}
+          onchange={(value) => {
+            this.composer.fields().isCheckinType = value;
+            m.redraw();
+          }}
+        >
+          {app.translator.trans('flarum-checkin.forum.composer.checkin_type_label')}
+        </Checkbox>
+      </div>,
+      100
+    );
   });
 
   // 确保在提交时包含 isCheckinType 字段
